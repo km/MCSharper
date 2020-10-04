@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "i3Gzu+aoVeej3MqfuxPv931QSDC35qJ797D7ou1d6dmVHNXtBOtEUIUygZS4rcWJoE2cUCr37mXOrbdzC7wcJA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\omara\\source\\repos\\MCSharper\\MCSharper\\MCSharper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\omara\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\omara\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
