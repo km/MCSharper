@@ -13,10 +13,7 @@ namespace MCSharper
         public string ClientID;
         public string user;
         public string pass;
-        private ArgumentException FailedAuth(string reason)
-        {
-            return new ArgumentException("Failed Authentication", reason);
-        }
+
         public AuthedEndpoint(string User, string Pass) 
         {
             wc = new WebClient();
@@ -38,18 +35,20 @@ namespace MCSharper
         {
             if (pass != null)
             {
-                if (captcha == null)
-                { payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true}"; }
-                else { payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true, \"captcha\": \"" + captcha + "\"" + ", \"captchaSupported\": \"InvisibleReCAPTCHA\"}"; }
-                try
-                {
-                    string response = wc.UploadString(url + "/authenticate", method, payload);
-                    if (response != "") { info = JObject.Parse(response); setVariables(info); }
+                if (captcha == null) { 
+                  payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true}"; 
+                 } 
+                 else 
+                 { 
+                 payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true, \"captcha\": \"" + captcha + "\"" + ", \"captchaSupported\": \"InvisibleReCAPTCHA\"}"; 
+                 
                 }
-                catch
-                {
-                    throw FailedAuth("Invalid Credentials/Wrong Captcha");
-                }
+                
+                string response = wc.UploadString(url + "/authenticate", method, payload);
+                    
+                    if (response != "") { 
+                         info = JObject.Parse(response); setVariables(info);    
+                  }
             }
         }
         //returns true if the token is valid
