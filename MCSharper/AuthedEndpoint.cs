@@ -13,10 +13,7 @@ namespace MCSharper
         public string ClientID;
         public string user;
         public string pass;
-        private ArgumentException FailedAuth(string reason)
-        {
-            return new ArgumentException("Failed Authentication", reason);
-        }
+
         public AuthedEndpoint(string User, string Pass) 
         {
             wc = new WebClient();
@@ -25,6 +22,7 @@ namespace MCSharper
             user = User;
             pass = Pass;
         }
+        
         //token:clientid format or it throws an exception, clientid doesnt have to be working unless your if your gonna refresh
         public AuthedEndpoint(string tokenclientid)
         {
@@ -33,26 +31,30 @@ namespace MCSharper
                 Token = tokenclientid.Split(':')[0];
                 ClientID = tokenclientid.Split(':')[1];
         }
-        //authenticates with the optional captcha paramter, throws expcetion if it fails
+        
+        //Authenticates with the optional captcha paramter, throws expcetion if it fails
         public void Authenticate(string captcha = null) 
         {
             if (pass != null)
             {
-                if (captcha == null)
-                { payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true}"; }
-                else { payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true, \"captcha\": \"" + captcha + "\"" + ", \"captchaSupported\": \"InvisibleReCAPTCHA\"}"; }
-                try
-                {
-                    string response = wc.UploadString(url + "/authenticate", method, payload);
-                    if (response != "") { info = JObject.Parse(response); setVariables(info); }
+                if (captcha == null) { 
+                  payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true}"; 
+                 } 
+                 else 
+                 { 
+                 payload = "{\"username\":\"" + user + "\",\"password\":\"" + pass + "\",\"requestUser\":true, \"captcha\": \"" + captcha + "\"" + ", \"captchaSupported\": \"InvisibleReCAPTCHA\"}"; 
+                 
                 }
-                catch
-                {
-                    throw FailedAuth("Invalid Credentials/Wrong Captcha");
-                }
+                
+                string response = wc.UploadString(url + "/authenticate", method, payload);
+                    
+                    if (response != "") { 
+                         info = JObject.Parse(response); setVariables(info);    
+                  }
             }
         }
-        //returns true if the token is valid
+        
+        //Returns true if the token is valid
         public bool isTokenValid()
         {
             payload = "{\"accessToken\":\"" + Token + "\"}";
@@ -63,31 +65,24 @@ namespace MCSharper
             }
             catch { return false; }
         }
-        //refreshes token
+        
+        //Refreshes token
         public void refreshToken() 
         {
             payload = "{\"accessToken\":\"" + Token + "\", \"clientToken\":\"" + ClientID + "\"}";
-            try 
-            {
                 string response = wc.UploadString(url + "/refresh", method, payload);
-                setVariables(JObject.Parse(response));
-            }
-            catch 
-            {
-                throw FailedAuth("Invalid Token/ClientID");
-            }
+            setVariables(JObject.Parse(response));
         }
+        
         //Converts a non captcha token to a captcha token without requiring captcha for approximatly one minute
         public void UpgradeToken() 
         {
-            try
-            {
                 wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + Token);
                 string response = wc.DownloadString("https://api.mojang.com/user/security/challenges");
                 wc.Headers.Remove(HttpRequestHeader.Authorization);
-            }
-            catch { throw FailedAuth("Invalid Token"); }
+           
         }
+        
         private void setVariables(JObject j)
         {
             Token = j["accessToken"].ToString();
