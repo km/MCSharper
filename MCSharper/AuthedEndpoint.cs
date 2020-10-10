@@ -13,10 +13,7 @@ namespace MCSharper
         public string ClientID;
         public string user;
         public string pass;
-        private ArgumentException FailedAuth(string reason)
-        {
-            return new ArgumentException("Failed Authentication", reason);
-        }
+
         public AuthedEndpoint(string User, string Pass) 
         {
             wc = new WebClient();
