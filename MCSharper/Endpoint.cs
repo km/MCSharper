@@ -10,8 +10,8 @@ namespace MCSharper
     {
         protected JObject info;
         protected WebClient wc;
-        protected string url = "https://api.mojang.com";
-        protected string method = "GET";
+        protected string url { get; set; }
+        protected string method { get; set; }
         protected string payload;
     }
 }

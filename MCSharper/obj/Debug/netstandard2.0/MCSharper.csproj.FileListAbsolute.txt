@@ -4,6 +4,6 @@ C:\Users\omara\source\repos\MCSharper\MCSharper\bin\Debug\netstandard2.0\MCSharp
 C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.csprojAssemblyReference.cache
 C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.AssemblyInfoInputs.cache
 C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.AssemblyInfo.cs
+C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.csproj.CoreCompileInputs.cache
 C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.dll
 C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.pdb
-C:\Users\omara\source\repos\MCSharper\MCSharper\obj\Debug\netstandard2.0\MCSharper.csproj.CoreCompileInputs.cache
