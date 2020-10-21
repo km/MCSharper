@@ -15,6 +15,7 @@ namespace MCSharper
         public string pass;
         public AuthedEndpoint(string User, string Pass) 
         {
+            wc = new WebClient();
             user = User;
             pass = Pass;
         }
@@ -25,7 +26,14 @@ namespace MCSharper
             if (tokenclientid != null)
             {
                 Token = tokenclientid.Split(':')[0];
-                ClientID = tokenclientid.Split(':')[1];
+                try
+                {
+                    ClientID = tokenclientid.Split(':')[1];
+                }
+                catch
+                {
+                   
+                }
             }
         }
         //authenticates with the optional captcha paramter, throws expcetion if it fails
@@ -72,12 +80,15 @@ namespace MCSharper
         //Converts a non captcha token to a captcha token without requiring captcha for approximatly one minute
         public void UpgradeToken() 
         {
-            url = "https://api.mojang.com";
-            method = "GET";
-            wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + Token);
-            string response = wc.DownloadString(url + "/user/security/challenges");
-            wc.Headers.Remove(HttpRequestHeader.Authorization);
-   
+
+            using (wc)
+            {
+                url = "https://api.mojang.com";
+                method = "GET";
+                wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + Token);
+                string response = wc.DownloadString(url + "/user/security/challenges");
+                wc.Headers.Remove(HttpRequestHeader.Authorization);
+            }
         }
         private void setVariables(JObject j)
         {
