@@ -107,7 +107,6 @@ namespace MCSharper
                 url = "https://account.mojang.com/available/minecraft/";
                 method = "GET";
                 string response = wc.DownloadString(url + name);
-                Console.WriteLine(response);
                 if (response == "TAKEN") { return false; }
                 else { return true; }
             }
